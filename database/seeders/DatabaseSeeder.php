@@ -16,10 +16,15 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             ProductSeeder::class,
+            ProductPriceSeeder::class,
             ImageSeeder::class,
             PostSeeder::class,
             VideoSeeder::class,
-            CommentSeeder::class
+            CommentSeeder::class,
+            PostTwoSeeder::class,
+            VideoTwoSeeder::class,
+            TagSeeder::class,
+            TaggableSeeder::class
         ]);
     }
 }

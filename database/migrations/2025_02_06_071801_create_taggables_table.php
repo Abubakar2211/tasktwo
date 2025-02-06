@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('taggables', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('price');
+            $table->foreignId('tag_id')->constrained()->cascadeOnDelete();
+            $table->unsignedBigInteger('taggable_id');
+            $table->string('taggable_type');
             $table->timestamps();
         });
     }
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('taggables');
     }
 };

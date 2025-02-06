@@ -2,26 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
+use App\Models\PostTwo;
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class PostTwoController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $products = Product::with('latestPrice')->get();
-    
-        $productsWithLatestPrice = $products->map(function ($product) {
-            return [
-                'product' => $product,
-                'latest_price' => $product->latestPrice,
-            ];
-        });
-    
-        return $productsWithLatestPrice;
+        $posts = PostTwo::with('tags')->get();
+        return $posts;
     }
 
     /**

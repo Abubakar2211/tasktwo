@@ -15,55 +15,43 @@ class PostController extends Controller
         $posts = Post::with('comment')->get();
         $data = $posts->map(function ($user) {
             return [
-               'Post Title' => $user->title,
-               'Post Content' => $user->content,
-               'Post Comment' => $user->comment->map(fn($content) => $content->content)
+                'Post Title' => $user->title,
+                'Post Content' => $user->content,
+                'Post Comment' => $user->comment->map(fn($content) => $content->content)
             ];
         });
         return $posts;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        $post = Post::create([
-            'title' => 'New Title',
-            'content' => 'New Content',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+ 
     
-        $post->comments()->createMany([
-            [
-                'content' => 'New Comment',
-                'user_id' => 1,
-                'commentable_id' => $post->id,
-                'commentable_type' => Post::class, 
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'content' => 'New Latest Comment',
-                'user_id' => 2,
-                'commentable_id' => $post->id,
-                'commentable_type' => Post::class, 
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]
-        ]);
-    
-        return response()->json($post);
-    }
-    
-    
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(Request $request)
     {
-        //
+
+        $validator = $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
+            'comments' => 'nullable|array',
+            'comments.*.content' => 'required|string',
+            'comments.*.user_id' => 'required|exists:users,id',
+        ]);
+
+        $post = Post::create([
+            'title' => $validator['title'],
+            'content' => $validator['content']
+        ]);
+        if (!empty($validator['comments'])) {
+            foreach ($validator['comments'] as $comment) {
+                $post->comments()->create([
+                    'content' => $comment['content'],
+                    'user_id' => $comment['user_id'],
+                    'commentable_id' => $post->id,
+                    'commentable_type' => Post::class
+                ]);
+            }
+        }
+        return response()->json($post->load('comments'), 201);
     }
 
     /**

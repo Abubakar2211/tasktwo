@@ -16,26 +16,22 @@ class ProductSeeder extends Seeder
     {
         Product::insert([
             [
-                'title' => 'Laptop',
-                'price' => '1200',
+                'name' => 'Laptop',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'title' => 'Smartphone',
-                'price' => '800',
+                'name' => 'Smartphone',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'title' => 'Headphones',
-                'price' => '150',
+                'name' => 'Headphones',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'title' => 'Camera',
-                'price' => '1500',
+                'name' => 'Camera',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
