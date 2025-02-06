@@ -14,4 +14,8 @@ class Product extends Model
     public function oldestPrice(){
         return $this->morphOne(ProductPrice::class,'priceable')->oldest('id');
     }
+    public function prices()
+    {
+        return $this->morphMany(ProductPrice::class, 'priceable');
+    }
 }
