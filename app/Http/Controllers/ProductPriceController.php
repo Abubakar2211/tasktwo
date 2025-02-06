@@ -22,19 +22,22 @@ class ProductPriceController extends Controller
         //     ];
         // });
         // return $data;
-        
+      
         $productPrices = ProductPrice::all();
 
         $data = $productPrices->map(function ($productPrice) {
             $latestPrice = $productPrice->latestPrice();
+            $oldestPrice = $productPrice->oldestPrice();
         
             return [
                 'Priceable Name' => $productPrice->priceable->name,
-                'Latest Price' => $latestPrice ? $latestPrice->price : null, // Null check
+                'Latest Price' => $latestPrice ? $latestPrice->price : null,
+                'Oldest Price' => $oldestPrice ? $oldestPrice->price : null,
             ];
         });
         
         return $data;
+        
         
 
 

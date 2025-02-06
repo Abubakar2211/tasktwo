@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Taggable;
 use Illuminate\Http\Request;
 
 class TaggableController extends Controller
@@ -11,7 +12,8 @@ class TaggableController extends Controller
      */
     public function index()
     {
-        //
+        $taggable = Taggable::all();
+        return $taggable;
     }
 
     /**

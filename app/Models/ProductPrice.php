@@ -16,18 +16,18 @@ class ProductPrice extends Model
     }
     public function latestPrice()
     {
-        return $this->where('priceable_id', $this->priceable_id)
-                    ->where('priceable_type', $this->priceable_type)
-                    ->latest()
-                    ->first();
+        return ProductPrice::where('priceable_id', $this->priceable_id)
+                            ->where('priceable_type', $this->priceable_type)
+                            ->orderBy('id', 'desc') 
+                            ->first();
     }
 
     public function oldestPrice()
     {
-        return $this->where('priceable_id', $this->priceable_id)
-                    ->where('priceable_type', $this->priceable_type)
-                    ->oldest()
-                    ->first();
+        return ProductPrice::where('priceable_id', $this->priceable_id)
+                            ->where('priceable_type', $this->priceable_type)
+                            ->orderBy('id', 'asc') 
+                            ->first();
     }
-    
+
 }

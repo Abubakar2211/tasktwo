@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
 class TagController extends Controller
@@ -11,8 +12,19 @@ class TagController extends Controller
      */
     public function index()
     {
-        //
+        $tags = Tag::with(['postTwos', 'videoTwos'])->get();
+    
+        $data = $tags->map(function($tag){
+            return [
+                'Tag' => $tag->tag,
+                'Post Titles' => $tag->postTwos->pluck('title'), 
+                'Video Titles' => $tag->videoTwos->pluck('title'),
+            ];
+        });
+        
+        return $tags;
     }
+    
 
     /**
      * Show the form for creating a new resource.
