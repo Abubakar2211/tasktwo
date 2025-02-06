@@ -22,7 +22,7 @@ class TagController extends Controller
             ];
         });
         
-        return $tags;
+        return $data;
     }
     
 
